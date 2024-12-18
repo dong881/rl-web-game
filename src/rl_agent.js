@@ -3,8 +3,8 @@ function RLAgent() {
     this.learningRate = 0.1;
     this.discountFactor = 0.9;
     this.explorationRate = 1.0;
-    this.explorationDecay = 0.995;
-    this.minExplorationRate = 0.01;
+    this.explorationDecay = 0.999; // 調整探索率衰減
+    this.minExplorationRate = 0.1; // 增大最小探索率
 
     this.getAction = function(state) {
         if (Math.random() < this.explorationRate) {
@@ -28,18 +28,28 @@ function RLAgent() {
         if (!this.qTable[nextState]) {
             this.qTable[nextState] = [0, 0, 0, 0];
         }
-
-        const currentQ = this.qTable[state][action];
-        const maxNextQ = Math.max(...this.qTable[nextState]);
-        const newQ = currentQ + this.learningRate * (reward + this.discountFactor * maxNextQ - currentQ);
-        this.qTable[state][action] = newQ;
+        const oldValue = this.qTable[state][action];
+        const nextMax = Math.max(...this.qTable[nextState]);
+        const newValue = oldValue + this.learningRate * (reward + this.discountFactor * nextMax - oldValue);
+        this.qTable[state][action] = newValue;
+        // 更新探索率
+        this.explorationRate = Math.max(this.minExplorationRate, this.explorationRate * this.explorationDecay);
     };
 
-    this.decayExploration = function() {
-        if (this.explorationRate > this.minExplorationRate) {
-            this.explorationRate *= this.explorationDecay;
-        }
+    // 保存 Q 表為 JSON 文件
+    this.saveQTable = function() {
+        const dataStr = JSON.stringify(this.qTable);
+        const currentTime = new Date().toISOString().replace(/[:.]/g, '-');
+        const fileName = `qtable_${currentTime}.json`;
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = fileName;
+        a.click();
+    };
+
+    // 從 JSON 文件加載 Q 表
+    this.loadQTable = function(jsonData) {
+        this.qTable = JSON.parse(jsonData);
     };
 }
-
-const agent = new RLAgent();

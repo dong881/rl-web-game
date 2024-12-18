@@ -26,11 +26,16 @@ h1 {
     margin: 10px 0;
 }
 
-#start-button {
+#action {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+#start-training-button {
     display: inline-block;
     padding: 15px 30px;
     margin: 20px auto;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 10px;
@@ -38,7 +43,28 @@ h1 {
     font-size: 18px;
 }
 
-#start-button:hover {
+#start-training-button:hover {
+    background-color: #0069d9;
+}
+
+/* 新增按鈕樣式 */
+#save-model-button,
+#load-model-button,
+#test-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#save-model-button:hover,
+#load-model-button:hover,
+#test-button:hover {
     background-color: #218838;
 }
 
