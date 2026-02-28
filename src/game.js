@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         NOTIFICATION_DURATION: 3000,
         PLAYER_COLOR: '#3498db',
         TARGET_COLOR: '#e74c3c',
+        TARGET_BORDER_RADIUS: 4,
         CANVAS_BG_COLOR: '#ecf0f1'
     };
 
@@ -146,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var i = 0; i < targets.length; i++) {
             var t = targets[i];
             // 繪製圓角矩形目標
-            var r = 4;
+            var r = CONFIG.TARGET_BORDER_RADIUS;
             ctx.beginPath();
             ctx.moveTo(t.x + r, t.y);
             ctx.lineTo(t.x + t.width - r, t.y);
