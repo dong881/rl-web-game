@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一個使用 Q-Learning 強化學習演算法的互動式網頁遊戲">
     <title>強化學習小遊戲</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game-container">
+    <div id="game-container" role="main">
         <h1>強化學習小遊戲</h1>
-        <div id="score">分數: 0</div>
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div id="action">行動: 無</div>
-        <button id="start-training-button">開始訓練</button>
-        <!-- 保存模型、載入模型、開始測試按鈕將在程式中動態添加 -->
+        <p id="instructions">使用按鈕控制訓練與測試，或點擊畫布以方向鍵/WASD 手動遊玩</p>
+        <div id="mode-indicator" class="mode-indicator idle" aria-live="polite">模式: 閒置</div>
+        <div id="score" aria-live="polite">分數: 0</div>
+        <div id="stats" aria-live="polite">回合: 0 | 探索率: 100.0% | 已知狀態: 0 | 步數: 0</div>
+        <canvas id="gameCanvas" width="800" height="600" tabindex="0" aria-label="遊戲畫布">您的瀏覽器不支援 Canvas 元素</canvas>
+        <div id="action" aria-live="polite">行動: 無</div>
+        <div id="notification" class="notification" role="alert" aria-live="assertive"></div>
+        <div id="button-group" class="button-group">
+            <button id="start-training-button" aria-label="開始訓練">開始訓練</button>
+            <button id="test-button" aria-label="開始測試">開始測試</button>
+            <button id="save-model-button" aria-label="保存模型">保存模型</button>
+            <button id="load-model-button" aria-label="載入模型">載入模型</button>
+            <button id="reset-button" aria-label="重置所有資料">重置</button>
+        </div>
+        <div id="speed-control" class="speed-control">
+            <label for="speed-slider">訓練速度:</label>
+            <input type="range" id="speed-slider" min="1" max="50" value="1" aria-label="訓練速度">
+            <span id="speed-value">1x</span>
+        </div>
+        <input type="file" id="file-input" accept=".json" style="display:none" aria-hidden="true">
     </div>
     <script src="rl_agent.js"></script>
     <script src="game.js"></script>
